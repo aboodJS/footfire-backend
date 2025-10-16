@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import cors from "cors";
 import "dotenv/config";
 
@@ -10,6 +10,7 @@ const apiUrl = process.env.API_URL;
 app.use(express.json());
 app.use(express.static("static"));
 app.use(cors());
+app.use(urlencoded())
 
 const rootRoute = app.route("/");
 const teamRoute = app.route("/teams/:team");
@@ -51,6 +52,17 @@ teamRoute.get(async (req, res) => {
     res.send({ results: [] });
   }
 });
+
+
+app.get("/login",(req, res) => {
+  res.send({msg: req.method})
+}
+)
+
+app.post("/signup",(req, res) => {
+  res.send({msg: req.method})
+}
+)
 
 app.listen(port, () => {
   console.log(`server url: http://localhost:${port}`);
