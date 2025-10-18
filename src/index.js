@@ -10,7 +10,7 @@ const apiUrl = process.env.API_URL;
 app.use(express.json());
 app.use(express.static("static"));
 app.use(cors());
-app.use(urlencoded())
+app.use(urlencoded({ extended: true }));
 
 const rootRoute = app.route("/");
 const teamRoute = app.route("/teams/:team");
@@ -53,16 +53,15 @@ teamRoute.get(async (req, res) => {
   }
 });
 
+app.post("/login", (req, res) => {
+  console.log(req.body);
+  res.redirect("http://localhost:5173/");
+});
 
-app.get("/login",(req, res) => {
-  res.send({msg: req.method})
-}
-)
-
-app.post("/signup",(req, res) => {
-  res.send({msg: req.method})
-}
-)
+app.post("/signup", (req, res) => {
+  console.log(req.body);
+  res.redirect("http://localhost:5173/");
+});
 
 app.listen(port, () => {
   console.log(`server url: http://localhost:${port}`);
