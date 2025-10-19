@@ -53,14 +53,20 @@ teamRoute.get(async (req, res) => {
   }
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res, next) => {
   console.log(req.body);
-  res.redirect("http://localhost:5173/");
+  const data = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
+    .then((d) => d.json())
+    .then((d) => d);
+  res.send({ ...data, location: "http://localhost:5173" });
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signup", async (req, res) => {
   console.log(req.body);
-  res.redirect("http://localhost:5173/");
+  const data = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
+    .then((d) => d.json())
+    .then((d) => d);
+  console.log({ ...data, location: "http://localhost:5173" });
 });
 
 app.listen(port, () => {
