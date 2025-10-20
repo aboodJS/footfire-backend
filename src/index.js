@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express";
+import express, { json, urlencoded } from "express";
 import cors from "cors";
 import "dotenv/config";
 
@@ -7,10 +7,9 @@ const app = express();
 const port = process.env.PORT;
 const apiUrl = process.env.API_URL;
 
-app.use(express.json());
 app.use(express.static("static"));
 app.use(cors());
-app.use(urlencoded({ extended: true }));
+app.use(json());
 
 const rootRoute = app.route("/");
 const teamRoute = app.route("/teams/:team");
@@ -53,20 +52,13 @@ teamRoute.get(async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res, next) => {
+app.post("/login", async (req, res) => {
   console.log(req.body);
-  const data = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
-    .then((d) => d.json())
-    .then((d) => d);
-  res.send({ ...data, location: "http://localhost:5173" });
+  res.send({ request: req.body });
 });
 
 app.post("/signup", async (req, res) => {
-  console.log(req.body);
-  const data = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
-    .then((d) => d.json())
-    .then((d) => d);
-  console.log({ ...data, location: "http://localhost:5173" });
+  console.log({ location: "http://localhost:5173" });
 });
 
 app.listen(port, () => {
